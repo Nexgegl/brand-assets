@@ -1,0 +1,66 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "name": "NEXGEGL Canonical Design Tokens",
+  "version": "1.0.0",
+  "sourceOfTruth": {
+    "brand": "NEXGEGL Brand Kit",
+    "repository": "Nexgegl/brand-assets",
+    "governance": "Notion: NEXGEGL — Visual Governance System (SSOT LOCKED)"
+  },
+  "brand": {
+    "primary": {
+      "name": "Navy",
+      "value": "#2E3158",
+      "usage": "Primary brand color and principal background"
+    },
+    "accent": {
+      "name": "Gold",
+      "value": "#B79A56",
+      "usage": "Brand accent and emphasis"
+    },
+    "surface": {
+      "name": "Surface",
+      "value": "#363969",
+      "usage": "Secondary surfaces and cards"
+    },
+    "deep": {
+      "name": "Deep",
+      "value": "#232545",
+      "usage": "Depth and dark background treatment"
+    },
+    "text": {
+      "name": "Text",
+      "value": "#FFFFFF",
+      "usage": "Primary text on dark brand surfaces"
+    }
+  },
+  "kfsa": {
+    "kill": {
+      "value": "#DC2626",
+      "soft": "rgba(220,38,38,0.12)",
+      "meaning": "إيقاف / خطر حاد"
+    },
+    "alert": {
+      "value": "#F59E0B",
+      "soft": "rgba(245,158,11,0.12)",
+      "meaning": "تنبيه / تصعيد"
+    },
+    "fix": {
+      "value": "#2563EB",
+      "soft": "rgba(37,99,235,0.12)",
+      "meaning": "يحتاج إصلاح"
+    },
+    "scale": {
+      "value": "#16A34A",
+      "soft": "rgba(22,163,74,0.12)",
+      "meaning": "أداء صحي"
+    }
+  },
+  "rules": {
+    "brandColorsDefineEnvironment": true,
+    "kfsaColorsAreDecisionSignalsOnly": true,
+    "kfsaFullBackgroundsProhibited": true,
+    "decorativeUseOfKfsaColorsProhibited": true,
+    "unverifiedColorIntroductionProhibited": true
+  }
+}
