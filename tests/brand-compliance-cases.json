@@ -1,117 +1,403 @@
 {
-  "version": "1.0",
-  "status": "TEST_VECTORS_ONLY_NOT_EXECUTABLE",
-  "source": "Notion NEXGEGL Visual Governance System (SSOT LOCKED)",
+  "version": "2.0",
+  "status": "EXECUTABLE_REGRESSION_VECTORS_NOT_PUBLICATION_APPROVAL",
   "cases": [
     {
-      "id": "B-01",
-      "description": "Official five brand tokens",
+      "id": "G-01",
+      "rule": "token-parity",
       "input": {
-        "primary": "#2E3158",
-        "accent": "#B79A56",
-        "surface": "#363969",
-        "deep": "#232545",
-        "text": "#FFFFFF"
+        "brand": {
+          "primary": "#2E3158",
+          "accent": "#B79A56",
+          "surface": "#363969",
+          "deep": "#232545",
+          "text": "#FFFFFF"
+        },
+        "kfsa": {
+          "kill": "#DC2626",
+          "alert": "#F59E0B",
+          "fix": "#2563EB",
+          "scale": "#16A34A"
+        }
       },
-      "expected": "PASS"
+      "expected": "ALLOW"
     },
     {
-      "id": "B-02",
-      "description": "Reject new arbitrary color in component",
-      "input": "<div style={{color:'#ff0088'}} />",
-      "expected": "FAIL"
+      "id": "G-02",
+      "rule": "token-parity",
+      "input": {
+        "brand": {
+          "primary": "#FFFFFF"
+        }
+      },
+      "expected": "BLOCK"
     },
     {
-      "id": "B-03",
-      "description": "Reject Tailwind state color",
-      "input": "text-red-500",
-      "expected": "FAIL"
+      "id": "G-03",
+      "rule": "component-colors",
+      "input": {
+        "code": "<div className='bg-[rgb(255,0,0)]' />"
+      },
+      "expected": "BLOCK"
     },
     {
-      "id": "B-04",
-      "description": "KFSA state only as icon or accent",
+      "id": "G-04",
+      "rule": "component-colors",
+      "input": {
+        "code": "<div style={{backgroundColor:'rgba(255,0,0,.3)'}} />"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-05",
+      "rule": "component-colors",
+      "input": {
+        "code": "<p className='text-rose-600'/>"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-06",
+      "rule": "component-colors",
+      "input": {
+        "code": "<span style={{ color: '#ff0088' }} />"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-07",
+      "rule": "component-colors",
+      "input": {
+        "code": "<div className='bg-[oklch(0.6_0.3_30)]'/>"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-08",
+      "rule": "component-colors",
+      "input": {
+        "code": "<span className='text-[color:var(--kfsa-kill)]'/>"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-09",
+      "rule": "component-colors",
+      "input": {
+        "code": "<span className='text-[color:var(--nxg-text)]'/>"
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "G-10",
+      "rule": "component-colors",
+      "input": {
+        "code": "<div className='bg-[var(--nxg-surface)]'/>"
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "G-11",
+      "rule": "state-usage",
       "input": {
         "state": "FIX",
         "surface": "--nxg-surface",
-        "accent": "--kfsa-fix"
+        "accent": "--kfsa-fix",
+        "evidence": "KFSA"
       },
-      "expected": "PASS"
+      "expected": "ALLOW"
     },
     {
-      "id": "B-05",
-      "description": "Reject full KFSA background",
+      "id": "G-12",
+      "rule": "state-usage",
       "input": {
-        "cardBackground": "--kfsa-kill"
+        "state": "KILL",
+        "surface": "--kfsa-kill",
+        "accent": "--kfsa-kill",
+        "evidence": "KFSA"
       },
-      "expected": "FAIL"
+      "expected": "BLOCK"
     },
     {
-      "id": "B-06",
-      "description": "Reject unauthorized logo redrawing",
+      "id": "G-13",
+      "rule": "state-usage",
       "input": {
-        "logo": "generated approximation"
+        "state": "SCALE",
+        "surface": "--nxg-surface",
+        "accent": "--kfsa-scale",
+        "evidence": "frontend"
       },
-      "expected": "FAIL"
+      "expected": "BLOCK"
     },
     {
-      "id": "B-07",
-      "description": "Reject noncanonical product positioning",
-      "input": "NEXGEGL Operating System",
-      "expected": "FAIL"
-    },
-    {
-      "id": "B-08",
-      "description": "Reject unsupported savings claim",
-      "input": "NEXGEGL guarantees 40% savings",
-      "expected": "FAIL"
-    },
-    {
-      "id": "B-09",
-      "description": "Reject cross-brand asset mixing",
+      "id": "G-14",
+      "rule": "state-usage",
       "input": {
-        "brand": "NEXGEGL",
-        "logo": "partner-brand.png",
-        "approval": null
+        "state": "FIX",
+        "surface": "--nxg-surface",
+        "accent": "--kfsa-kill",
+        "evidence": "KFSA"
       },
-      "expected": "FAIL"
+      "expected": "BLOCK"
     },
     {
-      "id": "B-10",
-      "description": "No autonomous publication",
+      "id": "G-15",
+      "rule": "terminology",
+      "input": {
+        "text": "NEXGEGL Decision Governance Layer"
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "G-16",
+      "rule": "terminology",
+      "input": {
+        "text": "NEXGEGL Operating-System"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-17",
+      "rule": "terminology",
+      "input": {
+        "text": "NEXGEGL operating   system"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-18",
+      "rule": "terminology",
+      "input": {
+        "text": "NEXGEGL O.S."
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-19",
+      "rule": "terminology",
+      "input": {
+        "text": "NEXGEGL نظام تشغيل"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-20",
+      "rule": "terminology",
+      "input": {
+        "text": "nexgegl Decision Governance Layer"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-21",
+      "rule": "claims",
+      "input": {
+        "text": "Reduce costs by 40%",
+        "evidence": null
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-22",
+      "rule": "claims",
+      "input": {
+        "text": "نضمن توفير ٤٠٪ من المصروفات",
+        "evidence": null
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-23",
+      "rule": "claims",
+      "input": {
+        "text": "Certified by Saudi regulators",
+        "evidence": null
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-24",
+      "rule": "claims",
+      "input": {
+        "text": "Our clients saved SAR 2 million",
+        "evidence": null
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-25",
+      "rule": "claims",
+      "input": {
+        "text": "Decision governance requires traceable evidence",
+        "evidence": null
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "G-26",
+      "rule": "claims",
+      "input": {
+        "text": "Reduce costs by 40%",
+        "evidence": {
+          "source": "audited-case-1",
+          "status": "VERIFIED",
+          "approvedBy": "commercial-owner"
+        }
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "G-27",
+      "rule": "publication",
       "input": {
         "actor": "AI_AGENT",
         "action": "PUBLISH",
-        "approval": null
+        "humanApproval": false
       },
-      "expected": "FAIL"
+      "expected": "BLOCK"
     },
     {
-      "id": "B-11",
-      "description": "Typography without approval must block canonical publication",
+      "id": "G-28",
+      "rule": "publication",
       "input": {
-        "font": "Cairo",
-        "approval": "PENDING_APPROVAL"
+        "actor": "AI_AGENT",
+        "action": "DEPLOY",
+        "humanApproval": true
       },
-      "expected": "FAIL"
+      "expected": "BLOCK"
     },
     {
-      "id": "B-12",
-      "description": "Decision label without engine evidence is invalid",
+      "id": "G-29",
+      "rule": "publication",
       "input": {
-        "verdict": "SCALE",
-        "decisionSource": "frontend"
+        "actor": "HUMAN",
+        "action": "PUBLISH",
+        "humanApproval": false
       },
-      "expected": "FAIL"
+      "expected": "BLOCK"
     },
     {
-      "id": "B-13",
-      "description": "Approved asset reference without invented claim",
+      "id": "G-30",
+      "rule": "publication",
+      "input": {
+        "actor": "HUMAN",
+        "action": "PUBLISH",
+        "humanApproval": true
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "G-31",
+      "rule": "publication",
+      "input": {
+        "actor": "AI_AGENT",
+        "action": "MERGE",
+        "humanApproval": true
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-32",
+      "rule": "typography",
+      "input": {
+        "status": "PENDING_APPROVAL",
+        "canonical": false,
+        "approvedFamily": null,
+        "action": "DRAFT"
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "G-33",
+      "rule": "typography",
+      "input": {
+        "status": "PENDING_APPROVAL",
+        "canonical": false,
+        "approvedFamily": null,
+        "action": "PUBLISH"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-34",
+      "rule": "typography",
+      "input": {
+        "status": "APPROVED",
+        "canonical": true,
+        "approvedFamily": "Cairo",
+        "action": "PUBLISH"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-35",
+      "rule": "assets",
       "input": {
         "brand": "NEXGEGL",
         "logo": "logos/nexgegl-logo-dark-bg.png",
-        "claim": "Decision Governance Layer"
+        "approval": true
       },
-      "expected": "PASS"
+      "expected": "ALLOW"
+    },
+    {
+      "id": "G-36",
+      "rule": "assets",
+      "input": {
+        "brand": "NEXGEGL",
+        "logo": "partner-brand.png",
+        "approval": false
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-37",
+      "rule": "assets",
+      "input": {
+        "brand": "NEXGEGL",
+        "logo": "logos/generated-logo.svg",
+        "approval": true
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-38",
+      "rule": "decision",
+      "input": {
+        "source": "KFSA",
+        "verdict": "FIX",
+        "evidence": "decision-id"
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "G-39",
+      "rule": "decision",
+      "input": {
+        "source": "frontend",
+        "verdict": "SCALE",
+        "evidence": "decision-id"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-40",
+      "rule": "decision",
+      "input": {
+        "source": "AI_AGENT",
+        "verdict": "KILL",
+        "evidence": "decision-id"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "G-41",
+      "rule": "decision",
+      "input": {
+        "source": "KFSA",
+        "verdict": "ALERT",
+        "evidence": null
+      },
+      "expected": "BLOCK"
     }
   ]
 }
