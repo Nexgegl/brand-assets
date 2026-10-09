@@ -1,41 +1,44 @@
 #!/usr/bin/env node
+'use strict';
 const fs=require('node:fs');
 const assert=require('node:assert/strict');
 const read=p=>fs.readFileSync(p,'utf8');
-const json=p=>JSON.parse(read(p));
-const tokens=json('colors/nexgegl-design-tokens.json');
-const type=json('typography/typography.json');
-const tests=json('tests/brand-compliance-cases.json');
-const expected={primary:'#2E3158',accent:'#B79A56',surface:'#363969',deep:'#232545',text:'#FFFFFF'};
-const states={kill:'#DC2626',alert:'#F59E0B',fix:'#2563EB',scale:'#16A34A'};
-for(const [key,v] of Object.entries(expected))assert.equal(tokens.brand[key].value,v,`Brand token drift: ${key}`);
-for(const [key,v] of Object.entries(states))assert.equal(tokens.kfsa[key].value,v,`KFSA token drift: ${key}`);
-assert.equal(type.canonical,false,'Unapproved typography must not be canonical');
-assert.equal(type.status,'PENDING_APPROVAL');
-for(const k of ['arabic','english'])assert.equal(type.fonts[k].approvedFamily,null);
-for(const p of ['docs/BRAND_DNA.md','docs/BRAND_VOICE.md','ai/AI_BRAND_INSTRUCTIONS.md'])assert.ok(read(p).length>200,`Missing content: ${p}`);
-const expectedOutcomes={
-'B-01':'PASS','B-02':'FAIL','B-03':'FAIL','B-04':'PASS','B-05':'FAIL','B-06':'FAIL','B-07':'FAIL','B-08':'FAIL','B-09':'FAIL','B-10':'FAIL','B-11':'FAIL','B-12':'FAIL','B-13':'PASS'
+const load=p=>JSON.parse(read(p));
+const tokens=load('colors/nexgegl-design-tokens.json');
+const typography=load('typography/typography.json');
+const suite=load('tests/brand-compliance-cases.json');
+const BRAND={primary:'#2E3158',accent:'#B79A56',surface:'#363969',deep:'#232545',text:'#FFFFFF'};
+const KFSA={kill:'#DC2626',alert:'#F59E0B',fix:'#2563EB',scale:'#16A34A'};
+const ASSETS=new Set(['logos/nexgegl-logo-dark-bg.png','logos/nexgegl-logo-light-bg.png','logos/nexgegl-logo-transparent-dark.png','logos/nexgegl-logo-transparent-light.png']);
+const bannedColor=/(#[a-f\d]{3,8}\b|\b(?:rgba?|hsla?|oklch|lab|color)\s*\(|(?:text|bg|border|from|to|via)-(?:red|rose|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|pink|fuchsia|gray|slate|zinc|neutral|stone)-\d+|(?:text|bg|border)-\[(?![^\]]*var\(--nxg-)[^\]]*\])[^\]]+\])/i;
+const checks={
+'token-parity':x=>Object.entries(BRAND).every(([k,v])=>x.brand?.[k]===v)&&Object.entries(KFSA).every(([k,v])=>x.kfsa?.[k]===v),
+'component-colors':x=>typeof x.code==='string'&&!bannedColor.test(x.code),
+'state-usage':x=>typeof x.state==='string'&&Object.hasOwn(KFSA,x.state.toLowerCase())&&x.surface==='--nxg-surface'&&x.accent==='--kfsa-'+x.state.toLowerCase()&&x.evidence==='KFSA',
+'terminology':x=>typeof x.text==='string'&&!/(operating[\s_-]*system|o\s*\.\s*s\s*\.|\bOS\b|نظام\s*تشغيل)/iu.test(x.text)&&!/\bnexgegl\b/.test(x.text.replace(/NEXGEGL/g,'')),
+'claims':x=>{if(typeof x.text!=='string')return false;const claim=/(\d[\d,]*(?:[.,]\d+)?\s*(?:%|٪|percent|SAR|ريال)|[٠-٩]+\s*٪|\b(?:guarantee|guaranteed|certified|approved by|saved|savings|reduce costs)\b|نضمن|توفير|معتمد|اعتماد)/iu.test(x.text);return !claim||(x.evidence?.status==='VERIFIED'&&typeof x.evidence?.source==='string'&&x.evidence.source.length>3&&typeof x.evidence?.approvedBy==='string');},
+'publication':x=>x.actor==='HUMAN'&&x.humanApproval===true&&x.action==='PUBLISH',
+'typography':x=>x.status==='PENDING_APPROVAL'&&x.canonical===false&&x.approvedFamily===null&&x.action==='DRAFT',
+'assets':x=>x.brand==='NEXGEGL'&&ASSETS.has(x.logo)&&x.approval===true,
+'decision':x=>x.source==='KFSA'&&['KILL','FIX','SCALE','ALERT'].includes(x.verdict)&&typeof x.evidence==='string'&&x.evidence.length>0
 };
-function evaluate(t){
-const x=t.input;
-switch(t.id){
-case 'B-01':return Object.entries(expected).every(([k,v])=>x[k]===v)?'PASS':'FAIL';
-case 'B-02':return /#[0-9a-f]{3,8}/i.test(x)?'FAIL':'PASS';
-case 'B-03':return /(?:text|bg|border)-(?:red|amber|green|blue)-\d+/.test(x)?'FAIL':'PASS';
-case 'B-04':return x.surface==='--nxg-surface'&&x.accent==='--kfsa-fix'?'PASS':'FAIL';
-case 'B-05':return /^--kfsa-/.test(x.cardBackground)?'FAIL':'PASS';
-case 'B-06':return x.logo==='generated approximation'?'FAIL':'PASS';
-case 'B-07':return /\b(?:Operating System|OS)\b/i.test(x)?'FAIL':'PASS';
-case 'B-08':return /guarantees? \d+%/.test(x)?'FAIL':'PASS';
-case 'B-09':return x.approval===null&&x.logo.includes('partner')?'FAIL':'PASS';
-case 'B-10':return x.action==='PUBLISH'&&x.approval===null?'FAIL':'PASS';
-case 'B-11':return x.approval!=='APPROVED'?'FAIL':'PASS';
-case 'B-12':return x.decisionSource!=='KFSA'?'FAIL':'PASS';
-case 'B-13':return x.logo==='logos/nexgegl-logo-dark-bg.png'&&x.claim==='Decision Governance Layer'?'PASS':'FAIL';
-default:throw Error('Unknown test: '+t.id);
-}}
-assert.equal(tests.cases.length,13);
-for(const t of tests.cases){assert.equal(t.expected,expectedOutcomes[t.id],`Vector mismatch: ${t.id}`);assert.equal(evaluate(t),t.expected,`FAILED: ${t.id}`)}
-console.log('Brand Brain structural contract: PASS (13 cases).');
-console.log('NOTE: This is a targeted contract test, not a complete brand/copy/image/visual scanner.');
+function assess(test){const fn=checks[test.rule];assert.equal(typeof fn,'function','Unregistered rule '+test.rule);return fn(test.input)?'ALLOW':'BLOCK';}
+for(const [k,v] of Object.entries(BRAND))assert.equal(tokens.brand[k]?.value,v,'Brand token drift: '+k);
+for(const [k,v] of Object.entries(KFSA))assert.equal(tokens.kfsa[k]?.value,v,'KFSA token drift: '+k);
+assert.equal(typography.canonical,false,'Typography cannot become canonical in this PR');
+assert.equal(typography.status,'PENDING_APPROVAL');
+for(const language of ['arabic','english']){assert.equal(typography.fonts[language].status,'PENDING_APPROVAL');assert.equal(typography.fonts[language].approvedFamily,null);}
+for(const section of ['weights','sizes','lineHeights'])assert.equal(typography[section].status,'PENDING_APPROVAL');
+for(const p of ['docs/BRAND_DNA.md','docs/BRAND_VOICE.md','ai/AI_BRAND_INSTRUCTIONS.md'])assert.ok(read(p).length>200,'Missing document '+p);
+assert.ok(suite.cases.length>=35,'Missing negative regressions');
+let passed=0,negative=0;const ids=new Set();
+for(const test of suite.cases){
+ assert.ok(!ids.has(test.id),'Duplicate test identifier');ids.add(test.id);
+ assert.ok(['ALLOW','BLOCK'].includes(test.expected),'Invalid expected outcome');
+ assert.equal(assess(test),test.expected,test.id+': '+test.rule);passed++;
+ if(test.expected==='BLOCK')negative++;
+}
+assert.ok(negative>=20,'Insufficient negative cases');
+console.log('PASS: '+passed+'/'+suite.cases.length+' reusable-rule cases ('+negative+' negative).');
+console.log('PASS: locked token integrity, document presence, Typography PENDING_APPROVAL.');
+console.log('LIMITATION: CI verifies defined fixtures/contracts only. It is not human brand approval or authorization to publish.');
