@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "status": "EXECUTABLE_REGRESSION_VECTORS_NOT_PUBLICATION_APPROVAL",
+  "status": "PROPOSED_ACCEPTANCE_FIXTURES_NOT_ENFORCEMENT_OR_APPROVAL",
   "cases": [
     {
       "id": "G-01",
@@ -398,6 +398,269 @@
         "evidence": null
       },
       "expected": "BLOCK"
+    },
+    {
+      "id": "BB-01-P",
+      "criterion": "BB-01",
+      "rule": "responsive-typography",
+      "input": {
+        "status": "PENDING_APPROVAL",
+        "canonical": false,
+        "action": "DRAFT",
+        "scale": {
+          "mobile": null,
+          "desktop": null
+        }
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "BB-01-N",
+      "criterion": "BB-01",
+      "rule": "responsive-typography",
+      "input": {
+        "status": "PENDING_APPROVAL",
+        "canonical": false,
+        "action": "PUBLISH",
+        "scale": {
+          "mobile": 16,
+          "desktop": 32
+        }
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "BB-02-P",
+      "criterion": "BB-02",
+      "rule": "directionality",
+      "input": {
+        "segments": [
+          {
+            "lang": "ar",
+            "dir": "rtl",
+            "isolated": true
+          },
+          {
+            "lang": "en",
+            "dir": "ltr",
+            "isolated": true
+          }
+        ],
+        "mixed": true
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "BB-02-N",
+      "criterion": "BB-02",
+      "rule": "directionality",
+      "input": {
+        "segments": [
+          {
+            "lang": "ar",
+            "dir": "ltr",
+            "isolated": false
+          },
+          {
+            "lang": "en",
+            "dir": "ltr",
+            "isolated": false
+          }
+        ],
+        "mixed": true
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "BB-03-P",
+      "criterion": "BB-03",
+      "rule": "terminology",
+      "input": {
+        "text": "NEXGEGL Decision Governance Layer"
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "BB-03-N",
+      "criterion": "BB-03",
+      "rule": "terminology",
+      "input": {
+        "text": "NEXGEGL نظام تشغيل"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "BB-04-P",
+      "criterion": "BB-04",
+      "rule": "claims",
+      "input": {
+        "text": "Reduce costs by 40%",
+        "evidence": {
+          "status": "VERIFIED",
+          "source": "audited-case-1",
+          "approvedBy": "commercial-owner"
+        }
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "BB-04-N",
+      "criterion": "BB-04",
+      "rule": "claims",
+      "input": {
+        "text": "We guarantee 50% savings",
+        "evidence": null
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "BB-05-P",
+      "criterion": "BB-05",
+      "rule": "brand-separation",
+      "input": {
+        "brand": "NEXGEGL",
+        "product": "CORPORATE",
+        "logo": "logos/nexgegl-logo-dark-bg.png",
+        "approvedMapping": true
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "BB-05-N",
+      "criterion": "BB-05",
+      "rule": "brand-separation",
+      "input": {
+        "brand": "NEXGEGL",
+        "product": "UNVERIFIED_PRODUCT",
+        "logo": "logos/nexgegl-logo-dark-bg.png",
+        "approvedMapping": false
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "BB-06-P",
+      "criterion": "BB-06",
+      "rule": "architecture-boundary",
+      "input": {
+        "layer": "NEXGEGL",
+        "runtime": "Governance Runtime",
+        "engine": "KFSA",
+        "integrationClaim": false,
+        "verifiedIntegration": false
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "BB-06-N",
+      "criterion": "BB-06",
+      "rule": "architecture-boundary",
+      "input": {
+        "layer": "NEXGEGL",
+        "runtime": "Governance Runtime",
+        "engine": "KFSA",
+        "integrationClaim": true,
+        "verifiedIntegration": false
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "BB-07-P",
+      "criterion": "BB-07",
+      "rule": "decision",
+      "input": {
+        "source": "KFSA",
+        "verdict": "FIX",
+        "evidence": "KFSA-FIX-2026-0001"
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "BB-07-N",
+      "criterion": "BB-07",
+      "rule": "decision",
+      "input": {
+        "source": "AI_AGENT",
+        "verdict": "SCALE",
+        "evidence": "KFSA-SCALE-2026-0002"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "BB-08-P",
+      "criterion": "BB-08",
+      "rule": "specification-gate",
+      "input": {
+        "actor": "HUMAN",
+        "authority": "BRAND_OWNER",
+        "approvalRecord": "signed-approval-1",
+        "action": "APPROVE_SPEC"
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "BB-08-N",
+      "criterion": "BB-08",
+      "rule": "specification-gate",
+      "input": {
+        "actor": "CI",
+        "authority": "BRAND_OWNER",
+        "approvalRecord": "ci-green",
+        "action": "APPROVE_SPEC"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "BB-09-P",
+      "criterion": "BB-09",
+      "rule": "merge-gate",
+      "input": {
+        "actor": "HUMAN",
+        "authority": "REPO_MAINTAINER",
+        "approvalRecord": "merge-approval-1",
+        "checksPassed": true,
+        "action": "MERGE"
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "BB-09-N",
+      "criterion": "BB-09",
+      "rule": "merge-gate",
+      "input": {
+        "actor": "CI",
+        "authority": null,
+        "approvalRecord": null,
+        "checksPassed": true,
+        "action": "MERGE"
+      },
+      "expected": "BLOCK"
+    },
+    {
+      "id": "BB-10-P",
+      "criterion": "BB-10",
+      "rule": "release-gate",
+      "input": {
+        "actor": "HUMAN",
+        "authority": "RELEASE_OWNER",
+        "approvalRecord": "release-approval-1",
+        "draft": false,
+        "action": "RELEASE"
+      },
+      "expected": "ALLOW"
+    },
+    {
+      "id": "BB-10-N",
+      "criterion": "BB-10",
+      "rule": "release-gate",
+      "input": {
+        "actor": "HUMAN",
+        "authority": "RELEASE_OWNER",
+        "approvalRecord": "release-approval-1",
+        "draft": true,
+        "action": "RELEASE"
+      },
+      "expected": "BLOCK"
     }
-  ]
+  ],
+  "acceptanceVersion": "1.0"
 }
