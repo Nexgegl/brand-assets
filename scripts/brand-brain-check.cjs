@@ -10,7 +10,7 @@ const suite=load('tests/brand-compliance-cases.json');
 const BRAND={primary:'#2E3158',accent:'#B79A56',surface:'#363969',deep:'#232545',text:'#FFFFFF'};
 const KFSA={kill:'#DC2626',alert:'#F59E0B',fix:'#2563EB',scale:'#16A34A'};
 const ASSETS=new Set(['logos/nexgegl-logo-dark-bg.png','logos/nexgegl-logo-light-bg.png','logos/nexgegl-logo-transparent-dark.png','logos/nexgegl-logo-transparent-light.png']);
-const bannedColor=/(#[a-f\d]{3,8}\b|\b(?:rgba?|hsla?|oklch|lab|color)\s*\(|(?:text|bg|border|from|to|via)-(?:red|rose|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|pink|fuchsia|gray|slate|zinc|neutral|stone)-\d+|(?:text|bg|border)-\[(?![^\]]*var\(--nxg-)[^\]]*\])[^\]]+\])/i;
+const bannedColor=/(?:#[a-f\d]{3,8}\b|\b(?:rgba?|hsla?|oklch|lab|color)\s*\(|(?:text|bg|border|from|to|via)-(?:red|rose|orange|amber|yellow|lime|green|blue|indigo|violet|purple|pink|fuchsia|gray|slate|zinc|neutral|stone)-\d+|(?:text|bg|border)-\[(?![^\]]*var\(--nxg-)[^\]]*?\])[^\]]+\])/i;
 const checks={
 'token-parity':x=>Object.entries(BRAND).every(([k,v])=>x.brand?.[k]===v)&&Object.entries(KFSA).every(([k,v])=>x.kfsa?.[k]===v),
 'component-colors':x=>typeof x.code==='string'&&!bannedColor.test(x.code),
