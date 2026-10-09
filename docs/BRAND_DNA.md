@@ -40,3 +40,6 @@ Potential differentiator: decision governance **above** existing business system
 4. Evidence register for metrics and other external claims.
 
 **Approval requirement:** Brand owner + architecture/governance owner for changed boundaries; commercial owner for substantiated claims.
+
+## BB-05 / BB-06 approval boundary (proposed)
+Require explicit `brand`, `product`, and audience for every deliverable. Product-to-brand ownership must be checked against an approved registry; **unknown mapping blocks publication**. Governance Runtime is the governance authority, KFSA produces formal decisions only through the approved pathway. Do not claim live ERP integration, broad compatibility or product readiness without a deployment-specific evidence reference and commercial authorization.
