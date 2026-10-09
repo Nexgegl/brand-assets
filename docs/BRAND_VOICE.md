@@ -31,3 +31,6 @@ State the customer's operational problem, decision owner, evidence required, imp
 
 ## Publication gate
 Every factual claim needs a named, dated evidence reference and claim owner. Product copy needs product-owner approval; brand-level changes need brand-governance approval. Unknown content must be labelled **PENDING_APPROVAL**, not silently approved.
+
+## BB-03 review boundary (proposed)
+Arabic and English examples are review fixtures, not approved copy. Test forbidden terminology and exaggeration on content proposals; a green keyword check cannot establish appropriate institutional tone. A human brand reviewer must assess context, readability and localization before approval.
