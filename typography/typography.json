@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0",
+  "status": "PENDING_APPROVAL",
+  "canonical": false,
+  "source": "docs/NEXGEGL_BRAND_STANDARD.md §7",
+  "fonts": {
+    "arabic": {
+      "candidateFamilies": [
+        "Cairo",
+        "IBM Plex Sans Arabic"
+      ],
+      "approvedFamily": null,
+      "status": "PENDING_APPROVAL"
+    },
+    "english": {
+      "candidateFamilies": [],
+      "approvedFamily": null,
+      "status": "PENDING_APPROVAL"
+    }
+  },
+  "weights": {
+    "body": null,
+    "heading": null,
+    "status": "PENDING_APPROVAL"
+  },
+  "sizes": {
+    "body": null,
+    "h1": null,
+    "h2": null,
+    "h3": null,
+    "caption": null,
+    "status": "PENDING_APPROVAL"
+  },
+  "lineHeights": {
+    "body": null,
+    "heading": null,
+    "status": "PENDING_APPROVAL"
+  },
+  "direction": {
+    "arabic": "rtl",
+    "english": "ltr",
+    "mixedText": "Use direction isolation for inline mixed-language content; verify per medium",
+    "status": "IMPLEMENTATION_GUIDANCE"
+  },
+  "media": {
+    "web": "PENDING_APPROVAL",
+    "reports": "PENDING_APPROVAL"
+  },
+  "fontAssets": {
+    "approvedLicenses": "PENDING_APPROVAL",
+    "selfHosting": "PENDING_APPROVAL"
+  },
+  "rules": [
+    "Do not present candidate fonts or null scales as locked tokens",
+    "No font files are distributed by this specification",
+    "Require approval and sync with Brand Kit and Notion before canonical release"
+  ]
+}
