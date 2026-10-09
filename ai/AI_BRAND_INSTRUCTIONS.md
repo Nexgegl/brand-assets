@@ -50,3 +50,19 @@ Use `tests/brand-compliance-cases.json` as a contract for a subsequent executabl
 
 ## CI is not publication approval
 A passing GitHub Actions check confirms only that the specific automated fixture and token assertions executed successfully. It **does not** approve typography, factual claims, visual assets, Brand DNA/Voice, or production publication. Approval must be documented by an authorized human reviewer through the established workflow; Draft PRs remain non-release artifacts. Do not infer readiness, change status to APPROVED, or publish automatically from green checks.
+
+## Brand Brain Acceptance Criteria v1.0 — proposed, not approved
+| ID | Test rule | Positive / negative fixture type | Additional approval |
+|---|---|---|---|
+| BB-01 | `responsive-typography` | Pending draft without invented scale / unapproved numeric sizes blocked | Brand owner + visual QA |
+| BB-02 | `directionality` | Explicit isolated RTL/LTR segments / non-isolated mixed text blocked | Bilingual visual QA |
+| BB-03 | `terminology` | Approved vocabulary / forbidden OS variants blocked | Brand Voice reviewer |
+| BB-04 | `claims` | Verified evidence+owner / unsubstantiated claims blocked | Commercial owner |
+| BB-05 | `brand-separation` | Correct brand/approved product and logo / mixed or unknown product blocked | Brand owner |
+| BB-06 | `architecture-boundary` | Accurate layer/core boundaries / unverified integration blocked | Governance owner |
+| BB-07 | `decision` | KFSA-sourced verified decision / agent-created verdict blocked | KFSA governance owner |
+| BB-08 | `specification-gate` | Human-signed specific approval / CI-only approval blocked | Specification authority |
+| BB-09 | `merge-gate` | Independent merge approval / green CI alone blocked | Repository authority |
+| BB-10 | `release-gate` | Independent release authorization outside Draft / Draft release blocked | Release authority |
+
+**Traceability:** `tests/brand-compliance-cases.json` defines BB-labelled positive and negative fixtures. `scripts/brand-brain-check.cjs` executes their reusable rules; a green CI confirms the fixtures only, not global inference across Claude or other agents. Typography remains **PENDING_APPROVAL**. Human visual review is required for typography and bidirectional rendering. No merge, specification approval, or publication follows automatically from CI.
