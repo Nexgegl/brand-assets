@@ -1,0 +1,117 @@
+{
+  "version": "1.0",
+  "status": "TEST_VECTORS_ONLY_NOT_EXECUTABLE",
+  "source": "Notion NEXGEGL Visual Governance System (SSOT LOCKED)",
+  "cases": [
+    {
+      "id": "B-01",
+      "description": "Official five brand tokens",
+      "input": {
+        "primary": "#2E3158",
+        "accent": "#B79A56",
+        "surface": "#363969",
+        "deep": "#232545",
+        "text": "#FFFFFF"
+      },
+      "expected": "PASS"
+    },
+    {
+      "id": "B-02",
+      "description": "Reject new arbitrary color in component",
+      "input": "<div style={{color:'#ff0088'}} />",
+      "expected": "FAIL"
+    },
+    {
+      "id": "B-03",
+      "description": "Reject Tailwind state color",
+      "input": "text-red-500",
+      "expected": "FAIL"
+    },
+    {
+      "id": "B-04",
+      "description": "KFSA state only as icon or accent",
+      "input": {
+        "state": "FIX",
+        "surface": "--nxg-surface",
+        "accent": "--kfsa-fix"
+      },
+      "expected": "PASS"
+    },
+    {
+      "id": "B-05",
+      "description": "Reject full KFSA background",
+      "input": {
+        "cardBackground": "--kfsa-kill"
+      },
+      "expected": "FAIL"
+    },
+    {
+      "id": "B-06",
+      "description": "Reject unauthorized logo redrawing",
+      "input": {
+        "logo": "generated approximation"
+      },
+      "expected": "FAIL"
+    },
+    {
+      "id": "B-07",
+      "description": "Reject noncanonical product positioning",
+      "input": "NEXGEGL Operating System",
+      "expected": "FAIL"
+    },
+    {
+      "id": "B-08",
+      "description": "Reject unsupported savings claim",
+      "input": "NEXGEGL guarantees 40% savings",
+      "expected": "FAIL"
+    },
+    {
+      "id": "B-09",
+      "description": "Reject cross-brand asset mixing",
+      "input": {
+        "brand": "NEXGEGL",
+        "logo": "partner-brand.png",
+        "approval": null
+      },
+      "expected": "FAIL"
+    },
+    {
+      "id": "B-10",
+      "description": "No autonomous publication",
+      "input": {
+        "actor": "AI_AGENT",
+        "action": "PUBLISH",
+        "approval": null
+      },
+      "expected": "FAIL"
+    },
+    {
+      "id": "B-11",
+      "description": "Typography without approval must block canonical publication",
+      "input": {
+        "font": "Cairo",
+        "approval": "PENDING_APPROVAL"
+      },
+      "expected": "FAIL"
+    },
+    {
+      "id": "B-12",
+      "description": "Decision label without engine evidence is invalid",
+      "input": {
+        "verdict": "SCALE",
+        "decisionSource": "frontend"
+      },
+      "expected": "FAIL"
+    },
+    {
+      "id": "B-13",
+      "description": "Approved asset reference without invented claim",
+      "input": {
+        "brand": "NEXGEGL",
+        "logo": "logos/nexgegl-logo-dark-bg.png",
+        "claim": "Decision Governance Layer"
+      },
+      "expected": "PASS"
+    }
+  ]
+}
