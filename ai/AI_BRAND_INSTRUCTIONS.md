@@ -47,3 +47,6 @@ For every generated deliverable supply:
 
 ## CI integration
 Use `tests/brand-compliance-cases.json` as a contract for a subsequent executable checker. Existence of test vectors is **not** evidence of CI execution or a passing enforcement gate.
+
+## CI is not publication approval
+A passing GitHub Actions check confirms only that the specific automated fixture and token assertions executed successfully. It **does not** approve typography, factual claims, visual assets, Brand DNA/Voice, or production publication. Approval must be documented by an authorized human reviewer through the established workflow; Draft PRs remain non-release artifacts. Do not infer readiness, change status to APPROVED, or publish automatically from green checks.
