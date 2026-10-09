@@ -1,0 +1,23 @@
+name: Brand Brain Contract
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'typography/**'
+      - 'ai/**'
+      - 'tests/**'
+      - 'colors/**'
+      - 'scripts/brand-brain-check.cjs'
+      - '.github/workflows/brand-brain.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  brand-brain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/brand-brain-check.cjs
